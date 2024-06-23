@@ -87,3 +87,24 @@ func (p *FIFO) Remove() *list.Element {
 func (p *FIFO) Access(item *list.Element) {
 	// No operation needed for FIFO
 }
+
+// LRU( Least Recently Used eviction policy)
+type LRU struct {
+	list *list.List
+}
+
+func NewLRU() *LRU {
+	return &LRU{list: list.New()}
+}
+
+func (p *LRU) Add(item *list.Element) {
+	p.list.PushFront(item)
+}
+
+func (p *LRU) Remove() *list.Element {
+	return p.list.Remove(p.list.Back()).(*list.Element)
+}
+
+func (p *LRU) Access(item *list.Element) {
+	p.list.MoveToFront(item)
+}
