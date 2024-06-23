@@ -108,3 +108,24 @@ func (p *LRU) Remove() *list.Element {
 func (p *LRU) Access(item *list.Element) {
 	p.list.MoveToFront(item)
 }
+
+// LIFO(Last In First Out eviction policy)
+type LIFO struct {
+	list *list.List
+}
+
+func NewLIFO() *LIFO {
+	return &LIFO{list: list.New()}
+}
+
+func (p *LIFO) Add(item *list.Element) {
+	p.list.PushFront(item)
+}
+
+func (p *LIFO) Remove() *list.Element {
+	return p.list.Remove(p.list.Front()).(*list.Element)
+}
+
+func (p *LIFO) Access(item *list.Element) {
+	// No operation needed for LIFO
+}
